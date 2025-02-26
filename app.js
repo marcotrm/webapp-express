@@ -1,9 +1,21 @@
 const express = require("express");
+const cors = require("cors");
 const mysql = require("mysql2/promise");
 const path = require("path");
 require("dotenv").config();
 
 const app = express();
+
+app.use(cors());
+
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
+
+app.use("/static", express.static(path.join(__dirname, "public")));
 
 // Middleware
 app.use(express.json());
